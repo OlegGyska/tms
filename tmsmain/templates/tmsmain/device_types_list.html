@@ -1,0 +1,27 @@
+{% extends "tmsmain/layout.html" %}
+{% load tmsmain_extras %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:add_device_type' %}" class="list-group-item" style="width:100%">ДОДАТИ ТИП</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Перегляд/редагування типів обладнання</h1>
+<h4>Перелік типів:</h4>
+<table>
+    {% for type in device_list %}
+    <tr>
+        <td><a href="{% url 'tmsmain:device_types' %}">{{ type.name }}</a> |
+            Канал: {% get_choice ch_type type.channeltype %} | Дві SIM: {% if type.dualsim %} Так {% else %} Ні {% endif %} |
+            Комунн.: {% if type.iscommunicator %} Так {% else %} Ні {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<p class="notice">*нажміть на назву типу для редагування</p>
+
+{% endblock %}

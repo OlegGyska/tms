@@ -1,0 +1,17 @@
+Corrections needed:
+
+1. When creating task and if no objects found - display message.
+
+2. When editing user check if username contains only latin letters and email entered correctly.
+
+3. Add ability to change user password w/o django admin.
+
+4. Add input string length check in view functions before saving.
+
+5. Decide and implement how to work with deleted models
+
+6. Display date to if task status if pending
+
+7. Add "return" to previous screen option in sidebar for task view/edit tree.
+
+8. When saving models that contain date/time field, check id date is not in the past

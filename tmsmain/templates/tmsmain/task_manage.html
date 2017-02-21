@@ -1,0 +1,72 @@
+{% extends "tmsmain/layout.html" %}
+{% load tmsmain_extras %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+    <a href="{{request.META.HTTP_REFERER}}" class="list-group-item" style="width:100%; margin: 0 0 20px 0;">&#10096 НАЗАД</a>
+    <a href="{% url 'tmsmain:create_task' %}" class="list-group-item" style="width:100%">НОВЕ ЗАВДАННЯ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Управління завданням</h1>
+    <table id="view_task_table">
+        <tr>
+            <td class="top_row" colspan="2" height="26" style="background: #eceeec; border-top: 3px solid {%if task.priority == 1%}grey{%elif task.priority == 2%}#4dff88{%elif task.priority == 3%}#ffff4d{%else%}#ff3300{%endif%}">
+                <a href="{%url 'tmsmain:object_details' task.objectid.pk%}">{{task.objectid.number}} - {{task.objectid.name}}</a></td>
+        </tr>
+        <tr>
+            <td width="50%"><span class="row_name">Тип події:</span>{%get_choice event_type task.eventtype%}</td>
+            <td width="50%"><span class="row_name">Дата:</span>{{task.eventtime}}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><span class="row_name">Створив:</span>{{task.creator.username}}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><span class="row_name">Останні дії:</span>{{task.lastactivity}}</td>
+        </tr>
+        <tr>
+            <td class="task_description" colspan="2" height="50">{{task.description}}</td>
+        </tr>
+    </table>
+    <hr>
+<form action="{%url 'tmsmain:task_manage' task.id %}" method="POST">
+{% csrf_token %}
+    <table id="manage_task_table">
+        <tr>
+            <td><span class="row_name">Назначено на:&nbsp;</span>{{task.assignedto.username}}</td>
+            <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Змінити виконавця" name="change_assign"></td>
+        </tr>
+        <tr>
+            <td><span class="row_name">Пріоритет:&nbsp;</span>{%get_choice priority task.priority%}</td>
+            <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Змінити пріоритет" name="change_priority"></td>
+        </tr>
+        <tr>
+            <td><span class="row_name">Статус:&nbsp;</span>{%get_choice status task.status%}{%span_pend_date task%}</td>
+            <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Змінити статус" name="change_status"></td>
+        </tr>
+        <tr>
+            <td><span class="row_name">Мітка:&nbsp;</span>{{task.label.name}}</td>
+            <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Змінити мітку" name="change_label"></td>
+        </tr>
+    </table>
+</form>
+<hr>
+    <h4>Останні дії по даному завданню</h4>
+{% for action in actions %}
+    <table id="view_action_table">
+        <tr>
+            <td width="50%" style="color: #3b7687" class="vt_top_row">{{action.by.username}}</td>
+            <td width="50%" class="vt_top_row2">{{action.time}}
+        </tr>
+        <tr>
+            <td colspan="2" class="vt_middle_row">{%get_choice action_type action.type%}</td>
+        </tr>
+        <tr>
+            <td colspan="2" height="50">{{action.comment}}</td>
+        </tr>
+    </table>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block main %}
+<div class="bootstrap-iso">
+<p style="font-size: 20px; color: red; text-align: center">Авторизуйтися для доступу до системи.</p>
+<span style="text-align: center; display: block;"><a class="btn btn-default" href="{% url 'tmsmain:user_login' %}" >УВІЙТИ</a></span>
+</div>
+{% endblock %}

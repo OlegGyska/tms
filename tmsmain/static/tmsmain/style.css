@@ -1,0 +1,465 @@
+body  {
+background: #F4F4F4;
+margin: 0;
+}
+
+#container { 
+width: 950px;
+margin: 0 auto;
+background: #FFFFFF;
+}
+
+#header{
+color: #3b7687;
+}
+#header .logo{
+font-weight: bold;
+padding: 20px 40px 0 40px;
+text-shadow: 0px 0px 2px black ;
+font-size: 70px;
+font-family: "Myriad Pro", "Arial Narrow";
+text-align: justify;
+}
+#header p {
+text-decoration: none;
+font-family: "Georgia";
+font-size: 15px; 
+line-height: 15px;
+text-align: right;
+}
+#header a {
+margin: 0 10px 0 0;
+color: #3b7687;
+text-decoration: none;
+font-family: "Georgia";
+font-size: 15px; 
+line-height: 5px;
+text-align: right;
+}
+
+#menu {
+background-color: #3b7687; 
+padding: 6px 0 6px 40px;
+}
+
+#menu a {
+color: #c5d6db;
+text-decoration: none; 
+font-size: 18px;
+font-family: "Arial Narrow", "Myriad Pro";
+}
+
+#menu a:hover {
+color: #ecf2f3;
+}
+
+#sidebar {
+float: left;
+width: 190px;
+min-height: 50px;
+padding: 0px;
+margin: 90px 0 0 0;
+color: #444444;
+font-family: "Georgia";
+font-size: 17px;
+line-height: 18px;
+text-align: justify;
+}
+
+#sidebar a {
+color: #3b7687;
+text-decoration: none;
+font-size: 19px;
+font-family: "Arial Narrow", "Myriad Pro";
+}
+
+#sidebar a:hover {
+color: #c5d6db;
+}
+
+#sidebar h4 {
+margin: 0 0 10px 0;
+color: #869843;
+font-size:20px;
+font-family: "Arial Narrow", "Myriad Pro";
+font-weight: normal;
+text-align: left;
+}
+
+#sidebar hr {
+border-color: #3b7687;
+margin: 0 0 0 0;
+}
+
+#sidebar .list-group-item-text{
+color: #999999;
+}
+
+h1 {
+margin: 0px;
+color: #869843; 
+font-size:24px; 
+font-family: "Arial Narrow", "Myriad Pro"; 
+font-weight: normal;
+}
+
+h2 {
+color: #3b7687;
+font-size: 15px; 
+margin: 20px 0 5px 0;
+}
+
+h3 {
+margin: 0px;
+color: #ff0000; 
+font-size:40px; 
+font-family: "Arial Narrow", "Myriad Pro"; 
+font-weight: normal;
+}
+
+hr{
+border-color: #3b7687;
+}
+
+#main {
+float: left;
+width: 709px;
+min-height: 540px;
+margin: 0 0 0 10px;
+padding: 35px 40px 30px 0;
+color: #444444;
+font-family: "Georgia";
+font-size: 17px;
+line-height: 18px;
+text-align: justify;
+} 
+
+#main h1 {
+margin: 0 0 35px 0;
+color: #869843;
+font-size:24px;
+font-family: "Arial Narrow", "Myriad Pro";
+font-weight: normal;
+text-align: center;
+}
+
+#main h4 {
+margin: 0 0 10px 0;
+color: #869843;
+font-size:20px;
+font-family: "Arial Narrow", "Myriad Pro";
+font-weight: normal;
+text-align: left;
+}
+
+
+#main a {
+color: #3b7687; 
+text-decoration: none;
+font-size: 20px;
+font-family: "Arial Narrow", "Myriad Pro";
+}
+
+#main a:hover {
+color: #444444;
+}
+
+#task_list_table {
+width: 100%;
+border-collapse: collapse;
+margin: 20px 0 25px 0;
+}
+#task_list_table td {
+padding: 3px 3px 3px 3px;
+}
+
+#task_list_table2 {
+width: 100%;
+border-collapse: collapse;
+margin: 20px 0 25px 0;
+}
+#task_list_table2 td {
+padding: 3px 3px 3px 3px;
+}
+
+#view_task_table {
+width: 100%;
+border-collapse: collapse;
+margin: 5px 0 25px 0;
+}
+#view_task_table td{
+padding: 2px 3px 2px 3px;
+}
+#view_task_table .row_name{
+color: #3b7687;
+text-decoration: none;
+}
+#view_task_table .task_description{
+padding: 10px 0 10px 0;
+color: #869843;
+}
+#view_task_table .top_row{
+border-bottom: 1px solid #3b7687;
+}
+
+#manage_task_table {
+width: 100%;
+border-collapse: collapse;
+margin: 5px 0 25px 0;
+}
+#manage_task_table td{
+padding: 2px 3px 2px 3px;
+}
+#manage_task_table .row_name{
+color: #3b7687;
+text-decoration: none;
+}
+
+#view_action_table{
+width: 100%;
+border-collapse: collapse;
+margin: 25px 0 25px 0;
+}
+#view_action_table td{
+padding: 2px 3px 2px 3px;
+}
+#view_action_table .vt_middle_row{
+color: #869843;
+}
+#view_action_table .vt_top_row{
+background: #eceeec;
+}
+#view_action_table .vt_top_row2{
+background: #eceeec;
+text-align: right;
+}
+
+.gen_form_input {
+font-size: 18px;
+margin: 5px 0 5px 0;
+}
+
+.table_del_butt{
+height: 150px;
+vertical-align: bottom;
+}
+
+.table_gen_butt{
+height: 50px;
+vertical-align: bottom;
+}
+
+.table_raw_name{
+padding: 5px 0 5px 0;
+color: #3b7687;
+font-size:20px;
+font-family: "Arial Narrow", "Myriad Pro";
+font-weight: normal;
+text-align: left;
+}
+
+.table_grey_column{
+background-color: #eceeec;
+border: 2px solid #eceeec;
+}
+
+.table_grey_row:nth-child(4n+1){
+background-color: #eceeec;
+border: 2px solid #eceeec;
+}
+
+.table_grey_row2:nth-child(4n+2){
+background-color: #eceeec;
+border: 2px solid #eceeec;
+}
+
+.table_obj_toprow{
+color: #869843;
+height: 23px;
+vertical-align: bottom;
+}
+
+.table_obj_bottrow{
+height: 23px;
+vertical-align: top;
+}
+
+.table_task_mrow{
+border-bottom: 1px solid #3b7687;
+border-right: 1px solid #3b7687;
+}
+
+.table_task_mrow:hover {
+border-bottom: 1px solid #3b7687;
+border-right: 1px solid #3b7687;
+background: #eceeec;
+cursor: pointer;
+}
+
+.table_column_name{
+padding: 0px 0 15px 0;
+color: #869843;
+font-size:20px;
+font-family: "Arial Narrow", "Myriad Pro";
+font-weight: normal;
+text-align: left;
+}
+
+#footer {
+clear: both;
+padding: 6px 40px 6px 40px;
+background: #d6d6d6; 
+font-family: "Lucida Sans Unicode";
+color: #444444;
+font-size: 12px;
+text-align: right;
+}
+
+#footer a {
+text-decoration: none; 
+color: #262626;
+}
+
+#footer a:hover {
+color: #666666;
+}
+
+.separator {
+font-size:11px;
+color:#FFFFFF;
+}
+
+hr.separator1 {
+color: #3b7687;
+border-width: 2px;
+border-style: solid;
+margin: 20px auto 20px auto;
+}
+
+.notice{
+font-size: 12px;
+}
+
+.err_message{
+margin: 0 0 20px 15px;
+color: red;
+font-size:20px;
+font-family: "Arial Narrow", "Myriad Pro";
+font-weight: normal;
+text-align: left;
+}
+
+#page_indexes{
+font-weight: bold;
+font-size: 19px;
+color: #3b7687;
+font-family:  "Arial Narrow", "Myriad Pro";
+}
+#page_indexes a{
+font-size: 19px;
+}
+#page_indexes .pagination{
+margin: 2px 0 5px 20px;
+}
+#page_indexes .selected_page{
+font-size: 19px;
+text-decoration: underline;
+color: #869843;
+}
+#page_indexes .arrow{
+color: #3b7687;
+}
+#page_indexes .arrow_na{
+color: grey;
+}
+
+#page_indexes2{
+font-weight: bold;
+font-size: 19px;
+color: #3b7687;
+font-family:  "Arial Narrow", "Myriad Pro";
+}
+#page_indexes2 a{
+font-size: 19px;
+}
+#page_indexes2 .pagination{
+margin: 2px 0 5px 20px;
+}
+#page_indexes2 .selected_page{
+font-size: 19px;
+text-decoration: underline;
+color: #869843;
+}
+#page_indexes2 .arrow{
+color: #3b7687;
+}
+#page_indexes2 .arrow_na{
+color: grey;
+}
+
+#page_indexes3{
+font-weight: bold;
+font-size: 19px;
+color: #3b7687;
+font-family:  "Arial Narrow", "Myriad Pro";
+}
+#page_indexes3 a{
+font-size: 19px;
+}
+#page_indexes3 .pagination{
+margin: 2px 0 5px 20px;
+}
+#page_indexes3 .selected_page{
+font-size: 19px;
+text-decoration: underline;
+color: #869843;
+}
+#page_indexes3 .arrow{
+color: #3b7687;
+}
+#page_indexes3 .arrow_na{
+color: grey;
+}
+
+#page_indexes4{
+font-weight: bold;
+font-size: 19px;
+color: #3b7687;
+font-family:  "Arial Narrow", "Myriad Pro";
+}
+#page_indexes4 a{
+font-size: 19px;
+}
+#page_indexes4 .pagination{
+margin: 2px 0 5px 20px;
+}
+#page_indexes4 .selected_page{
+font-size: 19px;
+text-decoration: underline;
+color: #869843;
+}
+#page_indexes4 .arrow{
+color: #3b7687;
+}
+#page_indexes4 .arrow_na{
+color: grey;
+}
+
+.dropdown-toggle .cut{
+display:inline-block;
+width:140px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+#main .form-control{
+font-size: 19px;
+font-family: "Arial Narrow", "Myriad Pro";
+}
+
+#main .btn{
+padding: 2.5px 10px 2.5px 10px;
+font-size: 19px;
+font-family: "Arial Narrow", "Myriad Pro";
+}

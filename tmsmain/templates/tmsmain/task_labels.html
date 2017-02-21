@@ -1,0 +1,23 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+    <a href="{% url 'tmsmain:add_task_label' %}" class="list-group-item" style="width:100%; margin: 0 0 20px 0;">ДОДАТИ МІТКУ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Перегляд/редагування міток завдань</h1>
+<h4>Перелік міток:</h4>
+<table>
+    {% for label in labels_list %}
+    <tr>
+        <td><a href="{% url 'tmsmain:edit_task_label' label.pk %}">{{ label.name }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<p class="notice">*нажміть на назву мітки для редагування</p>
+
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "tmsmain/layout.html" %}
+{% load staticfiles %}
+{% load tmsmain_extras %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+    <div class="list-group">
+      <a href="http://google.com" class="list-group-item" style="width:100%" target="_blank">Google</a>
+      <a href="https://mail.google.com/mail/?authuser=0" class="list-group-item" style="width:100%" target="_blank">Gmail</a>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block main %}
+<h1>Головна сторінка</h1>
+
+{% if can_view_clr %}
+    <div class="bootstrap-iso">
+        <ul class="nav nav-tabs">
+            <li class="active"><a  href="#1" data-toggle="tab">Нові та пріоритетні завдання</a>
+            </li>
+            <li><a href="#2" data-toggle="tab">Запити на закриття</a>
+            </li>
+        </ul>
+
+        <div class="tab-content ">
+            <div class="tab-pane active" id="1">
+                {% for task in tasks %}
+                <table id="task_list_table">
+                    <tr>
+                        <td rowspan="3" width="2px" style="background: {%if task.priority == 1%}grey{%elif task.priority == 2%}#4dff88{%elif task.priority == 3%}#ffff4d{%else%}#ff3300{%endif%};"></td>
+                        <td colspan="2" style="background: #eceeec;"><a href="{%url 'tmsmain:object_details' task.objectid.pk%}" title="{{task.objectid.region.name}}, {{task.objectid.address}}">{{task.objectid.number}} - {{task.objectid.name}}</a></td>
+                        <td width="250" style="background: #eceeec; white-space: nowrap;">{{task.eventtime}}</td>
+                    </tr>
+                    <tr onclick="document.location='{%url 'tmsmain:view_task' task.id %}'" class="table_task_mrow">
+                        <td class="table_task_mrow" width="100px">{%get_choice event_type task.eventtype%}&nbsp;</td>
+                        <td class="table_task_mrow" colspan="2" height="50px">{{task.description}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">{{task.label.name}}&nbsp;&nbsp;&nbsp;&nbsp;{%get_choice status task.status%}{%span_pend_date task%}</td>
+                        <td>{{task.assignedto.username}}</td>
+                    </tr>
+                </table>
+                {% endfor %}
+            </div>
+
+            <div class="tab-pane" id="2">
+                {% if clr_tasks %}
+                    {% for task in clr_tasks %}
+                    <table id="task_list_table2">
+                        <tr>
+                            <td rowspan="3" width="2px" style="background: {%if task.priority == 1%}grey{%elif task.priority == 2%}#4dff88{%elif task.priority == 3%}#ffff4d{%else%}#ff3300{%endif%};"></td>
+                            <td colspan="2" style="background: #eceeec;"><a href="{%url 'tmsmain:object_details' task.objectid.pk%}" title="{{task.objectid.region.name}}, {{task.objectid.address}}">{{task.objectid.number}} - {{task.objectid.name}}</a></td>
+                            <td width="250" style="background: #eceeec; white-space: nowrap;">{{task.eventtime}}</td>
+                        </tr>
+                        <tr onclick="document.location='{%url 'tmsmain:view_task' task.id %}'" class="table_task_mrow">
+                            <td class="table_task_mrow" width="100px">{%get_choice event_type task.eventtype%}&nbsp;</td>
+                            <td class="table_task_mrow" colspan="2" height="50px">{{task.description}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">{{task.label.name}}&nbsp;&nbsp;&nbsp;&nbsp;{%get_choice status task.status%}{%span_pend_date task%}</td>
+                            <td>{{task.assignedto.username}}</td>
+                        </tr>
+                    </table>
+                    {% endfor %}
+                {%endif%}
+            </div>
+        </div>
+    </div>
+{%else%}
+    <h4>Нові та пріоритетні завдання</h4>
+    {% if not tasks%}
+    Завдань немає
+    {%endif%}
+
+    {% for task in tasks %}
+        <table id="task_list_table">
+            <tr>
+                <td rowspan="3" width="2px" style="background: {%if task.priority == 1%}grey{%elif task.priority == 2%}#4dff88{%elif task.priority == 3%}#ffff4d{%else%}#ff3300{%endif%};"></td>
+                <td colspan="2" style="background: #eceeec;"><a href="{%url 'tmsmain:object_details' task.objectid.pk%}" title="{{task.objectid.region.name}}, {{task.objectid.address}}">{{task.objectid.number}} - {{task.objectid.name}}</a></td>
+                <td width="250" style="background: #eceeec; white-space: nowrap;">{{task.eventtime}}</td>
+            </tr>
+            <tr onclick="document.location='{%url 'tmsmain:view_task' task.id %}'" class="table_task_mrow">
+                <td class="table_task_mrow" width="100px">{%get_choice event_type task.eventtype%}&nbsp;</td>
+                <td class="table_task_mrow" colspan="2" height="50px">{{task.description}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{task.label.name}}&nbsp;&nbsp;&nbsp;&nbsp;{%get_choice status task.status%}{%span_pend_date task%}</td>
+                <td>{{task.assignedto.username}}</td>
+            </tr>
+        </table>
+        {% endfor %}
+{%endif%}
+
+	<script type="text/javascript" src="{% static 'tmsmain/jquery-3.1.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'tmsmain/bootstrap.min.js' %}"></script>
+{% endblock %}
+

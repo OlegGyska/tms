@@ -1,0 +1,28 @@
+{% extends "tmsmain/layout.html" %}
+{% load tmsmain_extras %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block main %}
+<h1>Обладнання</h1>
+    <table style="border-collapse: collapse;">
+        <tr>
+            <th width="185px" class="table_column_name">Тип приладу&nbsp;</th>
+            <th width="85px" class="table_column_name">Обєкт&nbsp;</th>
+            <th width="130px" class="table_column_name">Серійний номер&nbsp;</th>
+            <th width="150px" class="table_column_name">Канал&nbsp;</th>
+            <th width="100px" class="table_column_name">Дві SIM&nbsp;</th>
+        </tr>
+        {% for device in devices %}
+        <tr>
+            <td>{{device.type.name}}&nbsp;</td>
+            <td class="table_grey_column"><a href="{% url 'tmsmain:object_details' device.objectid.pk %}">{{device.objectid.number}}</a>&nbsp;</td>
+            <td>{{device.serial}}&nbsp;</td>
+            <td class="table_grey_column">{% get_choice ch_type device.type.channeltype %}&nbsp;</td>
+            <td>{% if device.type.dualsim %} Так {% else %} Ні {% endif %}</td>
+        </tr>        
+        {% endfor %}
+    </table>
+
+{% endblock %}

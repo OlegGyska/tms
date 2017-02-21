@@ -1,0 +1,72 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:users' %}" class="list-group-item" style="width:100%">КОРИСТУВАЧІ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Створення нового користувача:</h1>
+
+{% if error_message %} <p class="err_message">{{ error_message }}</p> {% endif %}
+
+<form action="{% url 'tmsmain:add_user' %}" method="POST" onsubmit="return confirm('Зберегти нового користувача?')">
+    {% csrf_token %}
+    <table>
+    <tr>
+        <td>Логін:</td>
+        <td><input class="gen_form_input" type="text" name="username" maxlength="30" value="{{username}}" required pattern="^[A-Za-z0-9]{3,}$"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td class="notice">*логін повинен бути не коротшим 3 знаків, містити цифри і латинські літери.</td>
+    </tr>
+    <tr>
+        <td>Ім'я:</td>
+        <td><input class="gen_form_input" type="text" name="first_name" value="{{first_name}}" maxlength="30"></td>
+    </tr>
+    <tr>
+        <td>Прізвище:</td>
+        <td><input class="gen_form_input" type="text" name="last_name" value="{{last_name}}" maxlength="30"></td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td><input class="gen_form_input" type="text" name="email" maxlength="30" value="{{email}}" pattern="^\S+@[A-Za-z0-9]+.[A-Za-z0-9]+$"></td>
+    </tr>
+    <tr>
+        <td>Повноваження:</td>
+        <td><select class="gen_form_input" name="role">
+            {% for i, n in user_roles %} <option value="{{ i }}" {% if not user_role and i == 4 %} selected {% elif user_role = i %} selected {% endif %}>{{ n }}</option> {% endfor %}
+        </select></td>
+    </tr>
+    <tr>
+        <td>Закриває завдання:</td>
+        <td><input class="gen_form_input" style="zoom: 1.2" type="checkbox" name="canclose" {%if canclose %} checked {%endif%}></td>
+    </tr>
+    <tr>
+        <td>Адміністратор:</td>
+        <td><input class="gen_form_input" style="zoom: 1.2" type="checkbox" name="is_admin" {%if is_admin%} checked {%endif%}></td>
+    </tr>
+    <tr>
+        <td>Пароль:</td>
+        <td><input class="gen_form_input" type="password" name="password_a" maxlength="30" required pattern="^[A-Za-z0-9]{6,}$"></td>
+    </tr>
+    <tr>
+        <td>Пароль повторно:</td>
+        <td><input class="gen_form_input" type="password" name="password_b" maxlength="30" required pattern="^[A-Za-z0-9]{6,}$"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td class="notice">*пароль повинен бути не коротшим 6 знаків, містити цифри і латинські літери.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Зберегти" name="save"></td>
+    </tr>
+    </table>
+</form>
+
+{% endblock %}

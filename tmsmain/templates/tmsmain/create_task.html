@@ -1,0 +1,127 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:tasks' %}" class="list-group-item" style="width:100%">ЗАВДАННЯ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Створення завдання</h1>
+
+{% if step == 1 %}
+
+<h4>Крок: 1</h4><br>
+<h4>Введіть номер обєкта</h4><br>
+
+<div class="bootstrap-iso">
+    <form action="{% url 'tmsmain:create_task' %}" method="post">
+    {% csrf_token %}
+        <div class="input-group col-lg-4">
+          <input type="text" class="form-control" placeholder="Номер обєкта..." name="number" autocomplete="off" maxlength="7" required>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit" value="Далі &#10148" name="step_1">Далі &#10148</button>
+          </span>
+        </div>
+    </form>
+</div>
+
+{% elif step == 2 %}
+<h4>Крок: 2</h4><br>
+<h4>Виберіть обєкт</h4><br>
+
+{% if not objects %} <p class="err_message">Обєкти не знайдено! Спробуйте інший запит або створіть
+    <a href="{% url 'tmsmain:create_object' %}" target="_blank">новий обєкт.</a></p> {% endif %}
+
+
+<form action="{% url 'tmsmain:create_task' %}" method="post">
+    {% csrf_token %}
+    <div class="bootstrap-iso">
+        <div class="input-group col-lg-4">
+          <input type="text" class="form-control" placeholder="Повторний пошук..." name="number" autocomplete="off" maxlength="7" required>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit" value="Далі &#10148" name="step_1">Пошук</button>
+          </span>
+        </div>
+    </div>
+</form>
+
+{% if objects %}
+<form action="{% url 'tmsmain:create_task' %}" method="post">
+    {% csrf_token %}
+<table style="margin: 25px 0 35px 0">
+    {% for object in objects %}
+    <tr>
+        <td><input type="radio" name="object_id" required value="{{object.pk}}"></td>
+        <td><a href="{% url 'tmsmain:object_details' object.pk %}" target="_blank" title="Детальна інформація по обєкту">{{ object.number }}</a></td>
+        <td>{{ object.name }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Далі &#10148" name="step_2"></td>
+        <td></td>
+    </tr>
+</table>
+</form>
+{%endif%}
+
+{% elif step == 3 %}
+
+<h4>Крок: 3</h4><br>
+<h4>Введіть дані нового завдання</h4><br>
+{% if error_message %} <p class="err_message">{{ error_message }}</p> {% endif %}
+<form action="{% url 'tmsmain:create_task' %}" method="post" onsubmit="return confirm('Зберегти завдання?')">
+    {% csrf_token %}
+<table>
+    <tr>
+        <td class="table_raw_name">Обєкт:</td>
+        <td>{{object.number}} - {{object.name}}</td>
+    </tr>
+    <tr>
+        <td>Тип завдання:</td>
+        <td><select class="gen_form_input" name="event_type">
+            {% for i, n in event_types %} <option value="{{ i }}" {% if event_type == i %} selected {% endif %}>{{ n }}</option> {% endfor %}
+        </select></td>
+    </tr>
+    <tr>
+        <td>Дата події:</td>
+        <td><input style="width: 100px" class="gen_form_input" type="text" name="event_date" maxlength="10"
+                   placeholder="дд.мм.рррр" autocomplete="off" pattern="\d\d\.\d\d\.20\d\d">
+              Час: <input style="width: 65px" class="gen_form_input" type="text" name="event_time" maxlength="8"
+                          placeholder="гг.хх.сс" autocomplete="off" pattern="\d\d\.\d\d.\d\d">
+        </td>
+    </tr>
+    <tr>
+        <td>Опис:</td>
+        <td><textarea class="gen_form_input" name="description" maxlength="250"  style="width: 300px; height: 120px" required>{{ description }}</textarea></td>
+    </tr>
+    <tr>
+        <td>Мітка:</td>
+        <td><select class="gen_form_input" name="label">
+            {% for label in labels %} <option value="{{ label.pk }}" {% if task_label == label.pk %} selected {% endif %}>{{ label.name }}</option> {% endfor %}
+        </select></td>
+    </tr>
+    <tr>
+        <td>Пріоритет:</td>
+        <td><select class="gen_form_input" name="priority">
+            {% for i, n in priority %} <option value="{{ i }}" {% if not task_priority and i == 2 %} selected {% elif task_priority = i %} selected {% endif %}>{{ n }}</option> {% endfor %}
+        </select></td>
+    </tr>
+    <tr>
+        <td>Назначено на:</td>
+        <td><select class="gen_form_input" name="assigned_to">
+            {% for user in users %} <option value="{{ user.pk }}" {% if assigned_to == user.pk %} selected {% endif %}>{{ user.username }}</option> {% endfor %}
+        </select></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Зберегти" name="step_3"></td>
+    </tr>
+</table>
+</form>
+
+{% endif %}
+{% endblock %}

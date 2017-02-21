@@ -1,0 +1,42 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:regions' %}" class="list-group-item" style="width:100%">РЕГІОНИ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+
+<h1>Редагування регіона:</h1>
+<form action="{% url 'tmsmain:edit_region' region.pk %}" method="POST" onsubmit="return confirm('Зберегти зміни?')">
+    {% csrf_token %}
+    <table>
+    <tr>
+        <td><input class="gen_form_input" type="text" name="region_name" maxlength="25" value="{{region.name}}" required></td>
+    </tr>
+    <tr>
+        <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Зберегти" name="save"></td>
+    </tr>
+        {% if region.pk == 1 %}
+    <tr>
+        <td class="table_del_butt">
+            <input class="gen_form_input" style="color: grey;" type="submit" value="Видалити" name="delete" disabled>
+        </td>
+    </tr>
+    <tr>
+        <td class="notice">*перший регіон видалити неможливо</td>
+    </tr>
+        {% else %}
+    <tr>
+        <td class="table_del_butt">
+            <input class="gen_form_input" style="color: red;" type="submit" value="Видалити" name="delete">
+        </td>
+    </tr>
+        {% endif %}
+    </table>
+</form>
+
+{% endblock %}

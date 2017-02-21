@@ -1,0 +1,23 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:add_user' %}" class="list-group-item" style="width:100%">ДОДАТИ КОРИСТ.</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Перегляд/редагування користувачів</h1>
+<h4>Перелік користувачів:</h4>
+<table>
+    {% for user in users_list %}
+    <tr>
+        <td><a href="{% url 'tmsmain:edit_user' user.id %}">{{ user.username }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<p class="notice">*нажміть на ім'я користувача для редагування</p>
+
+{% endblock %}

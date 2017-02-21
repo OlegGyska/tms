@@ -1,0 +1,236 @@
+<form id="co_form" action="{% url 'tmsmain:create_object' %}" method="post">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Введіть номер обєкта</td>
+        </tr>
+        <tr>
+            <td><input type="text" name="object_number"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Далі"></td>
+        </tr>
+    </table>
+    <button type="button" onclick="clicked()">Далі</button>
+</form>
+
+
+<script type="text/javascript">
+function clicked() {
+       if (confirm('Зберегти регіон?')) {
+           document.getElementById("add_region").submit();
+       }
+    }
+</script>
+
+
+
+
+def check_access(request, role_required):
+    if request.user.is_authenticated():
+        userex = UserEx.objects.get(name=request.user)
+        if userex.has_access(role_required):
+            return None
+        else:
+            return HttpResponseRedirect(reverse('tmsmain:access_required'))
+    else:
+        return HttpResponseRedirect(reverse('tmsmain:login_required'))
+
+
+#sidebar {
+float: left;
+width: 160px;
+min-height: 50px;
+padding: 5px 15px 5px 15px;
+margin: 90px 0 0 0;
+border-top: 1px solid #3b7687;
+border-right: 1px solid #3b7687;
+border-bottom: 1px solid #3b7687;
+}
+
+
+<div class="page_indexes">
+{% if indexes.prev%}
+    <a href="{% url 'tmsmain:my_tasks' indexes.prev %}"><strong><span class="arrow">&#8678&nbsp;</span></strong></a>
+{%else%}
+    <strong><span class="arrow_na">&#8678&nbsp;</span></strong>
+{%endif%}
+
+{% if indexes.first%}
+    <a href="{% url 'tmsmain:my_tasks' indexes.first %}"><strong>{{indexes.first}}...&nbsp;</strong></a>
+{%endif%}
+
+{% for n in indexes.center %}
+    <a href="{% url 'tmsmain:my_tasks' n %}"><strong>{% if n == indexes.current %}<span class="selected_page">{{n}}</span>{%else%}{{n}}{%endif%}</strong></a>
+{%endfor%}
+
+{% if indexes.last%}
+    <a href="{% url 'tmsmain:my_tasks' indexes.last %}"><strong>&nbsp;...{{indexes.last}}</strong></a>
+{%endif%}
+
+{% if indexes.next%}
+    <a href="{% url 'tmsmain:my_tasks' indexes.next %}"><strong><span class="arrow">&nbsp;&#8680</span></strong></a>
+{%else%}
+    <strong><span class="arrow_na">&nbsp;&#8680</span></strong>
+{%endif%}
+
+
+
+<div class="containe">
+                    <div class="row" style="padding: 10px 0 5px 0;">
+                    <select class="selectpicker">
+                      <option>Mustard</option>
+                      <option>Ketchup</option>
+                      <option>Relish</option>
+                    </select>
+
+                    <select class="selectpicker" data-live-search="true" data-selected-text-format="count">
+                      <option>Тернопіль</option>
+                      <option>Збараж</option>
+                      <option>Київ</option>
+                    </select>
+                    </div>
+                </div>
+
+
+<script type="text/javascript">
+$(function(){
+    $('#filter_group_select').on('click', function(){
+        var val = window.location.hash;
+        var sub = $('#filter_select');
+        $('li', sub).filter(function(){
+            if (
+                 $(this).attr('data-group') === val
+              || $(this).attr('data-group') === 'SHOW'
+            ) {
+              if ($(this).parent('span').length) {
+                $(this).unwrap();
+              }
+            } else {
+              if (!$(this).parent('span').length) {
+                $(this).wrap( "<span>" ).parent().hide();
+              }
+            }
+        });
+    });
+    $('#filter_group_select').trigger('change');
+});</script>
+
+
+#sidebar a {
+display: inline-block;
+color: #3b7687;
+text-decoration: none;
+font-size: 19px;
+font-family: "Arial Narrow", "Myriad Pro";
+}
+
+width:100px; height:50px; line-height:50px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis !important;
+
+{% if filter_bar %}
+<nav class="navbar navbar-default" style="margin: -21px 0 20px 0">
+  <div class="container-fluid" id="filter">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <p class="navbar-text">Фільтрувати за:</p>
+    </div>
+
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{filter_type_label}}<span class="caret"></span></a>
+          <ul class="dropdown-menu" id="filter_group_select">
+            <li><a href="#priority">Пріоритетом</a></li>
+            <li><a href="#eventtype">Типом</a></li>
+            <li><a href="#status">Статусом</a></li>
+            <li><a href="#label">Міткою</a></li>
+            <li><a href="#assignee">Виконавцем</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{filter_value_label}}<span class="caret"></span></a>
+          <ul class="dropdown-menu" id="filter_select">
+
+            {% for value in filter_priority_list%}
+            <li data-group='#priority'><a href="{% url 'tmsmain:tasks' %}{% q_transform request filter_type='priority' filter_value=value.0 %}">{{value.1}}</a></li>
+            {%endfor%}
+            <li data-group='#eventtype'><a href="#A2">Пріоритетом</a></li>
+            <li data-group='#status'><a href="#A3">Типом</a></li>
+            <li data-group='#label'><a href="#A4">Статусом</a></li>
+            <li data-group='#assignee'><a href="#A4">Статусом</a></li>
+          </ul>
+        </li>
+    </ul>
+  </div>
+</nav>
+{%endif%}
+
+<h4>Крок: 1</h4><br>
+<h4>Введіть номер обєкта</h4><br>
+
+<form action="{% url 'tmsmain:create_task' %}" method="post">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Номер:</td>
+            <td><input class="gen_form_input" type="text" name="number" autocomplete="off" maxlength="7" required></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Далі &#10148" name="step_1"></td>
+        </tr>
+    </table>
+</form>
+
+<hr>
+<h4>Повторний пошук</h4><br>
+<form action="{% url 'tmsmain:create_task' %}" method="post">
+    {% csrf_token %}
+<table>
+    <tr>
+        <td>Номер:</td>
+        <td><input class="gen_form_input" type="text" name="number" autocomplete="off" maxlength="7" required></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Пошук" name="step_1"></td>
+    </tr>
+</table>
+</form>
+
+
+<script type="text/javascript">
+$(function(){
+    $('#filter_group_select').on('click', 'li > a', function(){
+        var href = $(this).attr("href");
+        var val = href.substr(href.indexOf("#"));
+        var sub = $('#filter_select');
+        $('li', sub).filter(function(){
+            if (
+                 $(this).attr('data-group') === val
+              || $(this).attr('data-group') === 'SHOW'
+            ) {
+              if ($(this).parent('span').length) {
+                $(this).unwrap();
+              }
+            } else {
+              if (!$(this).parent('span').length) {
+                $(this).wrap( "<span>" ).parent().hide();
+              }
+            }
+        });
+    });
+});</script>
+
+<script type="text/javascript">
+$(function () {
+   $(".dropdown-menu").on('click', 'li > a', function(){
+   $this = $(this);
+   var p = $this.parent().parent().prev();
+   p.text($(this).text());
+   p.append(' <span class="caret"></span>');
+   });
+ });
+</script>
+

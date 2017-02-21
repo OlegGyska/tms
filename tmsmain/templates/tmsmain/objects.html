@@ -1,0 +1,91 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:create_object' %}" class="list-group-item" style="width:100%">СТВОРИТИ ОБ'ЄКТ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Перелік об'єктів</h1>
+
+<div class="bootstrap-iso">
+    <nav aria-label="Page navigation">
+    <div id="page_indexes">
+        <ul class="pagination">
+            <li>{% if indexes.prev%}
+                <a href="{% url 'tmsmain:objects' indexes.prev %}" aria-label="Previous"><span class="arrow">&laquo;</span></a>
+            {%else%}
+                <span class="arrow_na">&laquo;</span>
+            {%endif%}</li>
+            <li>{% if indexes.first%}
+            <a href="{% url 'tmsmain:objects' indexes.first %}">{{indexes.first}}</a>
+            {%endif%}</li>
+            {% for n in indexes.center %}
+            <li>
+                {% if n == indexes.current %} <span class="selected_page">{{n}}</span>
+                {%else%}<a href="{% url 'tmsmain:objects' n %}">{{n}}</a>{%endif%}
+            </li>
+            {%endfor%}
+            <li>{% if indexes.last%}
+            <a href="{% url 'tmsmain:objects' indexes.last %}">{{indexes.last}}</a>
+            {%endif%}</li>
+
+            <li>{% if indexes.next%}
+                <a href="{% url 'tmsmain:objects' indexes.next %}" aria-label="Next"><span class="arrow">&raquo;</span></a>
+            {%else%}
+                <span class="arrow_na">&raquo;</span>
+            {%endif%}</li>
+        </ul>
+    </div>
+    </nav>
+</div>
+
+    <table width="100%" style="border-collapse: collapse; margin: 20px 0 20px 0;">
+        {% for object in objects %}
+        <tr class="table_grey_row">
+            <td width="85px" rowspan=2><a href="{% url 'tmsmain:object_details' object.pk %}">{{ object.number }}</a></td>
+            <td class="table_obj_toprow">{{ object.name }}</td>
+        </tr>
+        <tr class="table_grey_row2">
+            <td class="table_obj_bottrow">{{ object.address }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% if indexes.double_controls %}
+<div class="bootstrap-iso">
+    <nav aria-label="Page navigation">
+    <div id="page_indexes2">
+        <ul class="pagination">
+            <li>{% if indexes.prev%}
+                <a href="{% url 'tmsmain:objects' indexes.prev %}" aria-label="Previous"><span class="arrow">&laquo;</span></a>
+            {%else%}
+                <span class="arrow_na">&laquo;</span>
+            {%endif%}</li>
+            <li>{% if indexes.first%}
+            <a href="{% url 'tmsmain:objects' indexes.first %}">{{indexes.first}}</a>
+            {%endif%}</li>
+            {% for n in indexes.center %}
+            <li>
+                {% if n == indexes.current %} <span class="selected_page">{{n}}</span>
+                {%else%}<a href="{% url 'tmsmain:objects' n %}">{{n}}</a>{%endif%}
+            </li>
+            {%endfor%}
+            <li>{% if indexes.last%}
+            <a href="{% url 'tmsmain:objects' indexes.last %}">{{indexes.last}}</a>
+            {%endif%}</li>
+            <li>{% if indexes.next%}
+                <a href="{% url 'tmsmain:objects' indexes.next %}" aria-label="Next"><span class="arrow">&raquo;</span></a>
+            {%else%}
+                <span class="arrow_na">&raquo;</span>
+            {%endif%}</li>
+        </ul>
+    </div>
+    </nav>
+</div>
+{%endif%}
+
+{% endblock %}

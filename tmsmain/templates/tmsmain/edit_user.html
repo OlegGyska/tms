@@ -1,0 +1,82 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:users' %}" class="list-group-item" style="width:100%">КОРИСТУВАЧІ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Редагування користувача:</h1>
+<form action="{% url 'tmsmain:edit_user' user.pk %}" method="POST" onsubmit="return confirm('Зберегти зміни?')">
+    {% csrf_token %}
+    <table>
+    <tr>
+        <td>Логін:</td>
+        <td><input class="gen_form_input" type="text" name="user_name" maxlength="30" value="{{user.username}}" required></td>
+    </tr>
+    <tr>
+        <td>Ім'я:</td>
+        <td><input class="gen_form_input" type="text" name="user_first_name" maxlength="30" value="{{user.first_name}}"></td>
+    </tr>
+    <tr>
+        <td>Прізвище:</td>
+        <td><input class="gen_form_input" type="text" name="user_last_name" maxlength="30" value="{{user.last_name}}"></td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td><input class="gen_form_input" type="text" name="user_email" maxlength="30" value="{{user.email}}"></td>
+    </tr>
+    <tr>
+        <td>Повноваження:</td>
+        <td><select class="gen_form_input" name="user_role">
+            {% for i, n in user_roles %} <option value="{{ i }}" {% if userex.role == i %} selected {% endif %}>{{ n }}</option> {% endfor %}
+        </select></td>
+    </tr>
+    <tr>
+        <td>Закриває завдання:</td>
+        <td><input class="gen_form_input" style="zoom: 1.2" type="checkbox" name="user_canclose"
+        {% if userex.canclose %} checked {% endif %}></td>
+    </tr>
+    <tr>
+        <td>Адміністратор:</td>
+        <td><input class="gen_form_input" style="zoom: 1.2" type="checkbox" name="user_admin"
+        {% if user.is_superuser %} checked {% endif %}></td>
+    </tr>
+    <tr>
+        <td>Активний:</td>
+        <td><input class="gen_form_input" style="zoom: 1.2" type="checkbox" name="user_active"
+        {% if user.is_active %} checked {% endif %}></td>
+    </tr>
+    <tr>
+        <td>Пароль:</td>
+        <td><a style="text-decoration: underline;" href="{% url 'tmsmain:change_user_password' user.id %}"><em>змінити</em></a></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Зберегти" name="save"></td>
+    </tr>
+        {% if user.pk == 1 %}
+    <tr>
+        <td></td>
+        <td class="table_del_butt">
+            <input class="gen_form_input" style="color: grey;" type="submit" value="Видалити" name="delete" disabled>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="notice">*першого користувача видалити неможливо</td>
+    </tr>
+        {% else %}
+    <tr>
+        <td></td>
+        <td class="table_del_butt">
+            <input class="gen_form_input" style="color: red;" type="submit" value="Видалити" name="delete">
+        </td>
+    </tr>
+        {% endif %}
+    </table>
+</form>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:regions' %}" class="list-group-item" style="width:100%">РЕГІОНИ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Додати регіон</h1>
+<h4>Наявні регіони:</h4>
+<table>
+    {% for reg in reg_list %}
+    <tr>
+        <td>{{ reg.name }}</td>
+    </tr>
+    {% endfor %}
+</table><p>
+
+<form action="{% url 'tmsmain:add_region' %}" method="post" onsubmit="return confirm('Зберегти регіон?')">
+    {% csrf_token %}
+<table>
+    <tr>
+        <td><h4>Введіть назву нового регіону:</h4></td>
+    </tr>
+    <tr>
+        <td><input class="gen_form_input" type="text" name="region_name" maxlength="25" required></td>
+    </tr>
+    <tr>
+        <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Зберегти"></td>
+    </tr>
+</table>
+</form>
+
+
+{% endblock %}

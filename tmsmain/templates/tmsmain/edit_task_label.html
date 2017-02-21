@@ -1,0 +1,42 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:task_labels' %}" class="list-group-item" style="width:100%">МІТКИ ЗАВДАНЬ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+
+<h1>Редагування мітки:</h1>
+<form action="{% url 'tmsmain:edit_task_label' label.pk %}" method="POST" onsubmit="return confirm('Зберегти зміни?')">
+    {% csrf_token %}
+    <table>
+    <tr>
+        <td><input class="gen_form_input" type="text" name="label_name" maxlength="25" value="{{label.name}}" required></td>
+    </tr>
+    <tr>
+        <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Зберегти" name="save"></td>
+    </tr>
+        {% if label.pk == 1 %}
+    <tr>
+        <td class="table_del_butt">
+            <input class="gen_form_input" style="color: grey;" type="submit" value="Видалити" name="delete" disabled>
+        </td>
+    </tr>
+    <tr>
+        <td class="notice">*першу мітку видалити неможливо</td>
+    </tr>
+        {% else %}
+    <tr>
+        <td class="table_del_butt">
+            <input class="gen_form_input" style="color: red;" type="submit" value="Видалити" name="delete">
+        </td>
+    </tr>
+        {% endif %}
+    </table>
+</form>
+
+{% endblock %}

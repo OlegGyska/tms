@@ -1,0 +1,37 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:task_labels' %}" class="list-group-item" style="width:100%">МІТКИ ЗАВДАНЬ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Додати мітку завдання</h1>
+<h4>Наявні мітки:</h4>
+<table>
+    {% for label in labels_list %}
+    <tr>
+        <td>{{ label.name }}</td>
+    </tr>
+    {% endfor %}
+</table><p>
+
+<form action="{% url 'tmsmain:add_task_label' %}" method="post" onsubmit="return confirm('Зберегти мітку?')">
+    {% csrf_token %}
+<table>
+    <tr>
+        <td><h4>Введіть назву новї мітки:</h4></td>
+    </tr>
+    <tr>
+        <td><input class="gen_form_input" type="text" name="label_name" maxlength="25" required></td>
+    </tr>
+    <tr>
+        <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Зберегти"></td>
+    </tr>
+</table>
+</form>
+
+{% endblock %}

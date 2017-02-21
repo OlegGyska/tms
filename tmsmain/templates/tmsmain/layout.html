@@ -1,0 +1,34 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html style="transform: scale(1)" lang="uk">
+<head>
+<title>TMS</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{% static 'tmsmain/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'tmsmain/bootstrap-iso.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'tmsmain/bootstrap-select.min.css' %}">
+</head>
+<body>
+    <div id="container">
+      <div id="header"><span class="logo">TMS</span>
+        <p>
+        {% if user.is_authenticated %}
+            Привіт, {{ user.username }}! &nbsp;<a href="{% url 'tmsmain:user_logout' %}"><strong>Вихід</strong></a>
+        {% else %}
+            <a href="{% url 'tmsmain:user_login' %}"><strong>Вхід</strong></a>
+        {% endif %}
+        </p>
+      </div>
+      <div id="menu"> <a href="{% url 'index' %}">ГОЛОВНА</a> &nbsp; &nbsp; &nbsp; &nbsp;
+          <a href="{% url 'tmsmain:tasks' %}">ЗАВДАННЯ</a>&nbsp; &nbsp; &nbsp; &nbsp;<a href="{% url 'tmsmain:objects' 1 %}">ОБ'ЄКТИ</a>
+          {% if user.ex.role == 1 %}&nbsp; &nbsp; &nbsp; &nbsp;<a href="{% url 'tmsmain:admin_tools' %}">АДМІНІСТРУВАННЯ</a>{% endif %}</div>
+      <div id="sidebar">
+        {% block sidebar %}{% endblock %}
+      </div>
+      <div id="main">
+        {% block main %}{% endblock %}
+      </div>
+        <div id="footer"> &copy;2016 Task Management System &nbsp;<span class="separator">|</span>&nbsp; Олег (Lax-T) Гуска </div>
+    </div>
+</body>
+</html>

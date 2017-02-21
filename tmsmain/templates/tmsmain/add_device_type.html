@@ -1,0 +1,56 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:device_types' %}" class="list-group-item" style="width:100%">ТИПИ ПРИЛАДІВ</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Додати новий тип</h1>
+<h4>Наявні типи приладів:</h4>
+<table>
+    {% for type in device_list %}
+    <tr>
+        <td>{{ type.name }}</td>
+    </tr>
+    {% endfor %}
+</table><p>
+
+<form action="{% url 'tmsmain:add_device_type' %}" method="post" onsubmit="return confirm('Зберегти тип?')">
+    {% csrf_token %}
+<table>
+    <tr>
+        <td></td>
+        <td><h4>Введіть дані нового типу приладів</h4></td>
+    </tr>
+    <tr>
+        <td>Назва:</td>
+        <td><input class="gen_form_input" type="text" name="type_name" maxlength="25" required></td>
+    </tr>
+    <tr>
+        <td>Тип каналу:</td>
+        <td><select class="gen_form_input" name="channel_type">
+            {% for i, n in ch_type %} <option value="{{ i }}">{{ n }}</option> {% endfor %}
+        </select></td>
+    </tr>
+    <tr>
+        <td>Дві SIM:</td>
+        <td><input class="gen_form_input" style="zoom: 1.2" type="checkbox" name="dual_sim"></td>
+    </tr>
+    <tr>
+        <td>Комунікатор:</td>
+        <td><input class="gen_form_input" style="zoom: 1.2" type="checkbox" name="comm"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Зберегти"></td>
+    </tr>
+
+</table>
+</form>
+
+
+{% endblock %}

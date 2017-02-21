@@ -1,0 +1,57 @@
+{% extends "tmsmain/layout.html" %}
+{% load tmsmain_extras %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{{request.META.HTTP_REFERER}}" class="list-group-item" style="width:100%">&#10096 НАЗАД</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Перегляд обєкта</h1>
+<h4>Дані обєкта</h4>
+<table style="margin: 0 0 15px 0">
+    <tr><td class="table_raw_name">Номер:</td><td>{{object.number}}</td></tr>
+    <tr><td class="table_raw_name">Назва:</td><td>{{object.name}}</td></tr>
+    <tr><td class="table_raw_name">Адреса:</td><td>{{object.address}}</td></tr>
+    <tr><td class="table_raw_name">Регіон:</td><td>{{object.region.name}}</td></tr>
+    <tr><td class="table_raw_name">Тип:</td><td>{% get_choice object.TYPES object.type %}</td></tr>
+    <tr><td class="table_raw_name">Договір:</td><td>{{object.contract}}</td></tr>
+    <tr><td class="table_raw_name">Активний:</td><td>{% if object.active %} Так {% else %} Ні {% endif %}</td></tr>
+    <tr><td class="table_raw_name">Коментар:</td><td>{{object.comment}}</td></tr>
+</table>
+
+<h4>Прилади</h4>
+{% if devices %}
+{% for device in devices %}
+<table style="margin: 0 0 15px 0">
+    <tr><td class="table_raw_name">Тип приладу:</td><td>{{device.type.name}}</td></tr>
+    <tr><td class="table_raw_name">Канал зв'язку:</td><td>{% get_choice ch_type device.type.channeltype %}</td></tr>
+    <tr><td class="table_raw_name">Дві SIM:</td><td>{% if device.type.dualsim %} Так {% else %} Ні {% endif %}</td></tr>
+    <tr><td class="table_raw_name">Серійний номер:</td><td>{{device.serial}}</td></tr>
+    <tr><td class="table_raw_name">Переданий в кор.:</td><td>{% if device.rent %} Так {% else %} Ні {% endif %}</td></tr>
+    <tr><td class="table_raw_name">Коментар:</td><td>{{device.comment}}</td></tr>
+</table>
+{% endfor %}
+{% else %}
+<p style="margin 0 0 20px 0">Прилади не вказані
+{% endif %}
+
+<h4>Комунікатори</h4>
+{% if communicators %}
+{% for comm in communicators %}
+<table style="margin: 0 0 15px 0">
+    <tr><td class="table_raw_name">Тип приладу:</td><td>{{comm.type.name}}</td></tr>
+    <tr><td class="table_raw_name">Канал зв'язку:</td><td>{% get_choice ch_type comm.type.channeltype %}</td></tr>
+    <tr><td class="table_raw_name">Дві SIM:</td><td>{% if comm.type.dualsim %} Так {% else %} Ні {% endif %}</td></tr>
+    <tr><td class="table_raw_name">Серійний номер:</td><td>{{comm.serial}}</td></tr>
+    <tr><td class="table_raw_name">Переданий в кор.:</td><td>{% if comm.rent %} Так {% else %} Ні {% endif %}</td></tr>
+    <tr><td class="table_raw_name">Коментар:</td><td>{{comm.comment}}</td></tr>
+</table>
+{% endfor %}
+{% else %}
+<p style="margin 0 0 20px 0">Комунікатори не вказані
+{% endif %}
+{% endblock %}

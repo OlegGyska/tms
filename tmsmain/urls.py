@@ -1,0 +1,46 @@
+from django.conf.urls import url
+from . import views
+
+app_name = 'tmsmain'
+
+urlpatterns = [
+    url(r'^objects/page/(?P<page_n>[0-9]+)/$', views.objects, name='objects'),
+    url(r'^user_login/$', views.user_login, name='user_login'),
+    url(r'^user_logout/$', views.user_logout, name='user_logout'),
+    url(r'^objects/details/(?P<object_id>[0-9]+)/$', views.object_details,  name='object_details'),
+    url(r'^objects/create_object/$', views.create_object, name='create_object'),
+    url(r'^tasks/$', views.tasks, name='tasks'),
+    url(r'^tasks/(?P<page_n>[0-9]+)/$', views.tasks, name='tasks'),
+    url(r'^my_tasks/$', views.MyTasks.as_view(), name='my_tasks'),
+    url(r'^my_tasks/(?P<page_n>[0-9]+)/$', views.MyTasks.as_view(), name='my_tasks'),
+    url(r'^tasks_archive/$', views.TasksArchive.as_view(), name='tasks_archive'),
+    url(r'^tasks_archive/(?P<page_n>[0-9]+)/$', views.TasksArchive.as_view(), name='tasks_archive'),
+    url(r'^task/create_task/$', views.create_task, name='create_task'),
+    url(r'^task/view_task/(?P<task_id>[0-9]+)/$', views.ViewTask.as_view(), name='view_task'),
+    url(r'^task/add_action/(?P<task_id>[0-9]+)/$', views.TaskAddAction.as_view(), name='task_add_action'),
+    url(r'^task/close/(?P<task_id>[0-9]+)/$', views.TaskClose.as_view(), name='task_close'),
+    url(r'^task/reopen/(?P<task_id>[0-9]+)?$', views.TaskReopen.as_view(), name='task_reopen'),
+    url(r'^task/manage/(?P<task_id>[0-9]+)/$', views.TaskManage.as_view(), name='task_manage'),
+    url(r'^task/manage/change_label/(?P<task_id>[0-9]+)/$', views.TaskChangeLabel.as_view(), name='task_change_label'),
+    url(r'^task/manage/change_assign/(?P<task_id>[0-9]+)/$', views.TaskChangeAssign.as_view(), name='task_change_assign'),
+    url(r'^task/manage/change_status/(?P<task_id>[0-9]+)/$', views.TaskChangeStatus.as_view(), name='task_change_status'),
+    url(r'^task/manage/change_priority/(?P<task_id>[0-9]+)', views.TaskChangePriority.as_view(), name='task_change_priority'),
+    url(r'^devices/$', views.devices, name='devices'),
+    url(r'^admin_tools/$', views.admin_tools, name='admin_tools'),
+    url(r'^admin_tools/regions/$', views.regions, name='regions'),
+    url(r'^admin_tools/add_region/$', views.add_region, name='add_region'),
+    url(r'^admin_tools/edit_region/(?P<region_id>[0-9]+)/$', views.edit_region, name='edit_region'),
+    url(r'^admin_tools/device_list/$', views.device_types, name='device_types'),
+    url(r'^admin_tools/add_device_type/$', views.add_device_type, name='add_device_type'),
+    url(r'^admin_tools/task_labels/$', views.task_labels, name='task_labels'),
+    url(r'^admin_tools/add_task_label/$', views.add_task_label, name='add_task_label'),
+    url(r'^admin_tools/edit_task_label/(?P<label_id>[0-9]+)/$', views.edit_task_label, name='edit_task_label'),
+    url(r'^admin_tools/users/$', views.users, name='users'),
+    url(r'^admin_tools/edit_user/(?P<user_id>[0-9]+)/$', views.edit_user, name='edit_user'),
+    url(r'^admin_tools/add_user/$', views.AddUser.as_view(), name='add_user'),
+    url(r'^admin_tools/change_user_password/(?P<user_id>[0-9]+)/$', views.ChangeUserPassword.as_view(),
+        name='change_user_password'),
+    url(r'^error/(?P<error_n>[0-9]+)/$', views.error_page, name='error_page'),
+    url(r'^login_required/$', views.login_required, name='login_required'),
+    url(r'^access_required/$', views.access_required, name='access_required')
+]

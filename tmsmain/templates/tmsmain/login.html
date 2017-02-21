@@ -1,0 +1,28 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block main %}
+<h1>Вхід в систему</h1>
+
+{% if error_message %} <p class="err_message">{{ error_message }}</p> {% endif %}
+
+<form action="{% url 'tmsmain:user_login' %}" method="post">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Логін:</td>
+            <td><input class="gen_form_input" type="text" name="user_login" maxlength="30" autocomplete="off" required></td>
+        </tr>
+        <tr>
+            <td>Пароль:</td>
+            <td><input class="gen_form_input" type="password" name="user_password" maxlength="30" required></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="table_gen_butt"><input class="gen_form_input" type="submit" value="Вхід &#10148" name="login"></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

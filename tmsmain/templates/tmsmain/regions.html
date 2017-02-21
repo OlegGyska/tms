@@ -1,0 +1,23 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+<div class="bootstrap-iso">
+<div class="list-group">
+  <a href="{% url 'tmsmain:add_region' %}" class="list-group-item" style="width:100%">ДОДАТИ РЕГІОН</a>
+</div>
+</div>
+{% endblock %}
+
+{% block main %}
+<h1>Перегляд/редагування регіонів</h1>
+<h4>Перелік регіонів:</h4>
+<table>
+    {% for reg in reg_list %}
+    <tr>
+        <td><a href="{% url 'tmsmain:edit_region' reg.pk %}">{{ reg.name }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<p class="notice">*нажміть на назву регіона для редагування</p>
+
+{% endblock %}

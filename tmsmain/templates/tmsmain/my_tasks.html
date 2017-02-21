@@ -1,0 +1,121 @@
+{% extends "tmsmain/layout.html" %}
+{% load staticfiles %}
+{% load tmsmain_extras %}
+
+{% block sidebar %}
+
+{% endblock %}
+
+{% block main %}
+<h1>Мої завдання</h1>
+
+<div class="bootstrap-iso">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <p class="navbar-text">Сортувати за:</p>
+        </div>
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{order_by_label}}<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'tmsmain:my_tasks' %}{% q_transform request order_by='newest' tab='my_tsk' %}">Новизною</a></li>
+                <li><a href="{% url 'tmsmain:my_tasks' %}{% q_transform request order_by='priority' tab='my_tsk' %}">Пріоритетом</a></li>
+                <li><a href="{% url 'tmsmain:my_tasks' %}{% q_transform request order_by='type' tab='my_tsk' %}">Типом</a></li>
+                <li><a href="{% url 'tmsmain:my_tasks' %}{% q_transform request order_by='status' tab='all_tsk' %}">Статусом</a></li>
+              </ul>
+            </li>
+            <li {%if sort_label == 'desc'%} class="active" {%endif%}><a href="{% url 'tmsmain:my_tasks' %}{% q_transform request sort='desc' tab='my_tsk' %}"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></a></li>
+            <li {%if sort_label == 'asc'%} class="active" {%endif%}><a href="{% url 'tmsmain:my_tasks' %}{% q_transform request sort='asc' tab='my_tsk' %}"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li><div class="navbar-header">
+                <p class="navbar-text">Завдань: {{my_tasks_count}}</p>
+              </div></li>
+          </ul>
+      </div>
+    </nav>
+
+    <nav aria-label="Page navigation">
+        <div id="page_indexes3">
+            <ul class="pagination">
+                <li>{% if my_indexes.prev%}
+                    <a href="{% url 'tmsmain:my_tasks' indexes.prev %}{% q_transform request tab='my_tsk' %}" aria-label="Previous"><span class="arrow">&laquo;</span></a>
+                {%else%}
+                    <span class="arrow_na">&laquo;</span>
+                {%endif%}</li>
+                <li>{% if my_indexes.first%}
+                <a href="{% url 'tmsmain:my_tasks' indexes.first %}{% q_transform request tab='my_tsk' %}">{{my_indexes.first}}</a>
+                {%endif%}</li>
+                {% for n in my_indexes.center %}
+                <li>
+                    {% if n == my_indexes.current %} <span class="selected_page">{{n}}</span>
+                    {%else%}<a href="{% url 'tmsmain:my_tasks' n %}{% q_transform request tab='my_tsk' %}">{{n}}</a>{%endif%}
+                </li>
+                {%endfor%}
+                <li>{% if my_indexes.last%}
+                <a href="{% url 'tmsmain:my_tasks' indexes.last %}{% q_transform request tab='my_tsk' %}">{{my_indexes.last}}</a>
+                {%endif%}</li>
+                <li>{% if my_indexes.next%}
+                    <a href="{% url 'tmsmain:my_tasks' indexes.next %}{% q_transform request tab='my_tsk' %}" aria-label="Next"><span class="arrow">&raquo;</span></a>
+                {%else%}
+                    <span class="arrow_na">&raquo;</span>
+                {%endif%}</li>
+            </ul>
+        </div>
+    </nav>
+
+    {% for task in my_tasks %}
+    <table id="task_list_table2">
+        <tr>
+            <td rowspan="3" width="2px" style="background: {%if task.priority == 1%}grey{%elif task.priority == 2%}#4dff88{%elif task.priority == 3%}#ffff4d{%else%}#ff3300{%endif%};"></td>
+            <td colspan="2" style="background: #eceeec;"><a href="{%url 'tmsmain:object_details' task.objectid.pk%}" title="{{task.objectid.region.name}}, {{task.objectid.address}}">{{task.objectid.number}} - {{task.objectid.name}}</a></td>
+            <td width="250" style="background: #eceeec; white-space: nowrap;">{{task.eventtime}}</td>
+        </tr>
+        <tr onclick="document.location='{%url 'tmsmain:view_task' task.id %}'" class="table_task_mrow">
+            <td class="table_task_mrow" width="100px">{%get_choice event_type task.eventtype%}&nbsp;</td>
+            <td class="table_task_mrow" colspan="2" height="50px">{{task.description}}</td>
+        </tr>
+        <tr>
+            <td colspan="2">{{task.label.name}}&nbsp;&nbsp;&nbsp;&nbsp;{%get_choice status task.status%}{%span_pend_date task%}</td>
+            <td>{{task.assignedto.username}}</td>
+        </tr>
+    </table>
+    {% endfor %}
+
+    {% if my_indexes.double_controls %}
+    <nav aria-label="Page navigation">
+        <div id="page_indexes4">
+            <ul class="pagination">
+                <li>{% if my_indexes.prev%}
+                    <a href="{% url 'tmsmain:my_tasks' indexes.prev %}{% q_transform request tab='my_tsk' %}" aria-label="Previous"><span class="arrow">&laquo;</span></a>
+                {%else%}
+                    <span class="arrow_na">&laquo;</span>
+                {%endif%}</li>
+                <li>{% if my_indexes.first%}
+                <a href="{% url 'tmsmain:my_tasks' indexes.first %}{% q_transform request tab='my_tsk' %}">{{my_indexes.first}}</a>
+                {%endif%}</li>
+                {% for n in my_indexes.center %}
+                <li>
+                    {% if n == my_indexes.current %} <span class="selected_page">{{n}}</span>
+                    {%else%}<a href="{% url 'tmsmain:my_tasks' n %}{% q_transform request tab='my_tsk' %}">{{n}}</a>{%endif%}
+                </li>
+                {%endfor%}
+                <li>{% if my_indexes.last%}
+                <a href="{% url 'tmsmain:my_tasks' indexes.last %}{% q_transform request tab='my_tsk' %}">{{my_indexes.last}}</a>
+                {%endif%}</li>
+                <li>{% if my_indexes.next%}
+                    <a href="{% url 'tmsmain:my_tasks' indexes.next %}{% q_transform request tab='my_tsk' %}" aria-label="Next"><span class="arrow">&raquo;</span></a>
+                {%else%}
+                    <span class="arrow_na">&raquo;</span>
+                {%endif%}</li>
+            </ul>
+        </div>
+    </nav>
+    {%endif%}
+</div>
+
+<script type="text/javascript" src="{% static 'tmsmain/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'tmsmain/bootstrap.min.js' %}"></script>
+{% endblock %}

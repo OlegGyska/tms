@@ -1,0 +1,21 @@
+{% extends "tmsmain/layout.html" %}
+
+{% block sidebar %}
+
+{% endblock %}
+
+{% block main %}
+<h1>Адміністрування</h1>
+<p><a style="font-size: 18px" href="{% url 'tmsmain:regions' %}"><strong>>РЕГІОНИ</strong></a><br>
+Редагування списку регіонів.</p>
+
+<p><a style="font-size: 18px" href="{% url 'tmsmain:device_types' %}"><strong>>ТИПИ ПРИЛАДІВ</strong></a><br>
+Редагування списку основних типів приладів та комунікаторів.</p>
+
+<p><a style="font-size: 18px" href="{% url 'tmsmain:task_labels' %}"><strong>>МІТКИ ЗАВДАНЬ</strong></a><br>
+Редагування списку міток для завдань.</p>
+
+<p><a style="font-size: 18px" href="{% url 'tmsmain:users' %}"><strong>>КОРИСТУВАЧІ</strong></a><br>
+Керування списком користувачів та їх правами.</p>
+
+{% endblock %}
